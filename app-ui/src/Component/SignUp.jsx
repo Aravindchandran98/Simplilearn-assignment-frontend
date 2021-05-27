@@ -80,16 +80,19 @@ export default function SignUp({ history }) {
   const registerUser = async () => {
     try {
       await axios
-        .post("https://reqres.in/api/register", {
+        .post(`${process.env.REACT_APP_API_URL}/register`, {
+          first_name: values.firstname,
+          last_name: values.lastname,
           email: values.email,
           password: values.password,
+          mobile_number: values.phonenumber,
         })
         .then((res) => {
           console.log(res);
-          if (res.data) {
-            const { id, token } = res.data;
-            console.log(id, token);
-            toast.success("Successfully registered");
+          const { message, token } = res.data;
+          if (token) {
+            console.log(message, token);
+            toast.success(message);
           }
           setValues(relativeState);
           // history.push("/login");
@@ -130,12 +133,12 @@ export default function SignUp({ history }) {
         /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
       );
     }
-    // if ("password" in fieldValues) {
-    //   temp.errPassword = checkPassword(
-    //     fieldValues.password,
-    //     /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/
-    //   );
-    // }
+    if ("password" in fieldValues) {
+      temp.errPassword = checkPassword(
+        fieldValues.password,
+        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/
+      );
+    }
     if ("confirmPassword" in fieldValues) {
       temp.errConfirmPassword = reCheckPassword(
         values.password,

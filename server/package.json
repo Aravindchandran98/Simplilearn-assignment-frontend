@@ -1,11 +1,31 @@
 {
-  "name": "server",
+  "name": "simplilearn",
   "version": "1.0.0",
-  "description": "Creating a simple login and signup web application",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js",
+    "pro": "node index.js",
+    "migrate_up": "node node_modules/db-migrate/bin/db-migrate up --config config/database.json",
+    "migration:generate": "node node_modules/db-migrate/bin/db-migrate create"
   },
-  "author": "Aravind",
-  "license": "ISC"
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "db-migrate": "^0.11.12",
+    "db-migrate-pg": "^1.2.2",
+    "express": "^4.17.1",
+    "joi": "^17.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^8.6.0"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.7"
+  }
 }

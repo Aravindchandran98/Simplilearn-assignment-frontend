@@ -67,16 +67,17 @@ export default function Login({ history }) {
   const getAuthentication = async () => {
     try {
       await axios
-        .post("https://reqres.in/api/login", values)
+        .post(`${process.env.REACT_APP_API_URL}/login`, values)
         .then((res) => {
           console.log(res);
-          toast.success("Login successfully");
-          dispatch(authUser({ isLoggedIn: true }));
+          const { token, message } = res.data;
+          toast.success(message);
+          dispatch(authUser({ isLoggedIn: true, token }));
           history.push("/");
         })
         .catch((err) => {
           console.log(err);
-          toast.error("Invalid Input");
+          toast.error("Invalid Email or Password");
         });
     } catch (error) {
       console.log(error);
@@ -86,6 +87,7 @@ export default function Login({ history }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(values, "values.....");
+    console.log(process.env.REACT_APP_API_URL, "khsvdjk");
     if (validate(values)) {
       getAuthentication();
     }
