@@ -5,8 +5,10 @@ import HeaderBlockComponent from "./Component/HeaderBlockComponent";
 import Login from "./Component/Login";
 import HomePage from "./Component/HomePage";
 import SignUp from "./Component/SignUp";
+import { useSelector } from "react-redux";
 
 function App({ history }) {
+  const ProfileState = useSelector((state) => state.userProfile);
   useEffect(() => {
     history.push("/login");
   }, []);
@@ -18,9 +20,13 @@ function App({ history }) {
       </header>
       <main>
         <Switch>
+          {ProfileState && ProfileState.isLoggedIn ? (
+            <Route path="/" component={HomePage} />
+          ) : (
+            <Route path="/login" component={Login} />
+          )}
           <Route path="/login" component={Login} />
           <Route path="/signup" component={SignUp} />
-          <Route path="/" component={HomePage} />
         </Switch>
       </main>
     </div>
