@@ -12,8 +12,9 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     marginTop: theme.spacing(3),
     borderRadius: "10px",
-    background: "linear-gradient(45deg,#39f,#2982cc)",
+    background: "linear-gradient(45deg,#4EC1E6,#06A8DD)",
     borderColor: "#2982cc",
+    color: "#FFFFFF",
   },
 }));
 
@@ -34,7 +35,7 @@ export default function InfoCard({ rows }) {
                   variant="body2"
                   color="textSecondary"
                   component="p"
-                  style={{ textTransform: "capitalize" }}
+                  style={{ textTransform: "capitalize", color: "#FFFFFF" }}
                 >
                   {key}
                 </Typography>
