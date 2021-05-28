@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "100%",
     marginTop: theme.spacing(3),
   },
   submit: {
@@ -88,14 +88,11 @@ export default function SignUp({ history }) {
           mobile_number: values.phonenumber,
         })
         .then((res) => {
-          console.log(res);
           const { message, token } = res.data;
           if (token) {
-            console.log(message, token);
             toast.success(message);
           }
           setValues(relativeState);
-          // history.push("/login");
         })
         .catch((err) => {
           toast.error("Invalid Input");
@@ -107,11 +104,9 @@ export default function SignUp({ history }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(values, "values..after register....");
     if (validate(values)) {
       registerUser();
     }
-    // https://reqres.in/api/login
   };
 
   const validate = (fieldValues) => {

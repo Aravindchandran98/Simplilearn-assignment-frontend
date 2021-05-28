@@ -1,21 +1,16 @@
-import React, { useState } from "react";
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { Link } from "react-router-dom";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { authUser } from "../actions/userProfile";
 
 const useStyles = makeStyles((theme) => ({
@@ -31,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "100%",
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -69,14 +64,12 @@ export default function Login({ history }) {
       await axios
         .post(`${process.env.REACT_APP_API_URL}/login`, values)
         .then((res) => {
-          console.log(res);
           const { token, message } = res.data;
           toast.success(message);
           dispatch(authUser({ isLoggedIn: true, token }));
           history.push("/");
         })
         .catch((err) => {
-          console.log(err);
           toast.error("Invalid Email or Password");
         });
     } catch (error) {
@@ -86,12 +79,9 @@ export default function Login({ history }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(values, "values.....");
-    console.log(process.env.REACT_APP_API_URL, "khsvdjk");
     if (validate(values)) {
       getAuthentication();
     }
-    //axios and redux state updates are going to made here by dispatching
   };
 
   const validate = (fieldValues) => {

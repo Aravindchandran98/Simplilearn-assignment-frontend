@@ -1,19 +1,17 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
+import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import Switch from "@material-ui/core/Switch";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormGroup from "@material-ui/core/FormGroup";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { authUser } from "../actions/userProfile";
 import logo from "../images/logo.png";
-import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
-import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,31 +44,14 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
-  profileInfo: {
-    "& ul": {
-      listStyle: "none",
-      "& li": {
-        display: "flex",
-        "& p": {
-          color: "#00A7DC",
-          fontSize: theme.spacing(2),
-        },
-      },
-    },
-  },
 }));
 
-export default function HeaderBlockComponent() {
+function HeaderBlockComponent({ history }) {
   const classes = useStyles();
-  //   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const auth = useSelector((state) => state.userProfile);
-  console.log(auth, "liufhujrflkjk");
-
-  //   const handleChange = (event) => {
-  //     setAuth(event.target.checked);
-  //   };
+  const dispatch = useDispatch();
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -80,20 +61,18 @@ export default function HeaderBlockComponent() {
     setAnchorEl(null);
   };
 
+  const handleLogout = () => {
+    dispatch(authUser({ isLoggedIn: false, token: "" }));
+    history.push("/login");
+  };
+
+  const handleLogin = () => {
+    history.push("/login");
+    handleClose();
+  };
+
   return (
     <div className={classes.root}>
-      {/* <FormGroup>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={auth}
-              onChange={handleChange}
-              aria-label="login switch"
-            />
-          }
-          label={auth ? "Logout" : "Login"}
-        />
-      </FormGroup> */}
       <AppBar position="static" style={{ backgroundColor: "#fff" }}>
         <Toolbar>
           <img src={logo} alt="Simplilearn" className={classes.logo} />
@@ -109,15 +88,14 @@ export default function HeaderBlockComponent() {
             </li>
           </ul>
           {auth && auth.isLoggedIn ? (
-            <div className={classes.profileInfo}>
-              <ul>
-                <li>
-                  <Typography variant="body2">Aravindkumar</Typography>
-                </li>
-                <li>
-                  <Typography variant="body2">My Profile</Typography>
-                </li>
-              </ul>
+            <div>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleLogout}
+              >
+                Log out
+              </Button>
             </div>
           ) : (
             <div>
@@ -147,6 +125,7 @@ export default function HeaderBlockComponent() {
               >
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleLogin}>Log In</MenuItem>
               </Menu>
             </div>
           )}
@@ -155,3 +134,5 @@ export default function HeaderBlockComponent() {
     </div>
   );
 }
+
+export default withRouter(HeaderBlockComponent);
