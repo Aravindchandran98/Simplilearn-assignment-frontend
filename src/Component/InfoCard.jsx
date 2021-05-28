@@ -7,11 +7,13 @@ import React from "react";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: 174,
+    width: 210,
+    height: 100,
+    margin: theme.spacing(1),
+    marginTop: theme.spacing(3),
     borderRadius: "10px",
-    background: "linear-gradient(45deg,#321fdb,#1f1498)",
-    borderColor: "#1f1498",
-    margin: theme.spacing(3),
+    background: "linear-gradient(45deg,#39f,#2982cc)",
+    borderColor: "#2982cc",
   },
 }));
 
