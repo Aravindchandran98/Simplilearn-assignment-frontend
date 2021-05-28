@@ -44,6 +44,10 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  btnLogout: {
+    backgroundColor: "#06A8DD",
+    color: "#FFFFFF",
+  },
 }));
 
 function HeaderBlockComponent({ history }) {
@@ -91,7 +95,7 @@ function HeaderBlockComponent({ history }) {
             <div>
               <Button
                 variant="contained"
-                color="primary"
+                className={classes.btnLogout}
                 onClick={handleLogout}
               >
                 Log out
